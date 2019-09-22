@@ -1,10 +1,10 @@
-from rest_framework.generics import CreateAPIView
+from rest_framework.generics import CreateAPIView, RetrieveAPIView, RetrieveUpdateAPIView, UpdateAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from users.models import User
-from users.serializers import UserRegisterSerializer # UserLoginSerializer
-
+from users.serializers import UserRegisterSerializer, UserDetailSerializer, EmailSerializer  # UserLoginSerializer
+from rest_framework.permissions import IsAuthenticated
 
 # GET usernames/(?P<username>\w{5,20})/count/
 class UserCountView(APIView):
@@ -44,3 +44,19 @@ class UserRegisterView(CreateAPIView):
 #     """用户登录"""
 #     queryset = User.objects.all()
 #     serializer_class = UserLoginSerializer
+class UserDetailView(RetrieveAPIView):
+    """用户中心"""
+    serializer_class = UserDetailSerializer
+    permission_classes = [IsAuthenticated]
+    #
+    def get_object(self):
+        return self.request.user
+
+
+class EmailView(UpdateAPIView):
+    """保存邮箱"""
+    serializer_class = EmailSerializer
+
+    def get_object(self):
+        return self.request.user
+

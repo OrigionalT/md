@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'corsheaders',
 
     'users.apps.UsersConfig',
+    'oauth.apps.OauthConfig',
 ]
 
 MIDDLEWARE = [
@@ -235,3 +236,8 @@ JWT_AUTH = {
 AUTHENTICATION_BACKENDS = [
     'users.utils.UsernameMobileAuthBackend',
 ]
+
+# QQ登录配置
+QQ_CLIENT_ID = '101474184' # 开发者应用APPID
+QQ_CLIENT_SECRET = 'c6ce949e04e12ecc909ae6a8b09b637c' # 开发者应用APPKEY
+QQ_REDIRECT_URI = 'http://www.meiduo.site:8080/oauth_callback.html' # 回调网址

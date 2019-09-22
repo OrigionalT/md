@@ -8,4 +8,7 @@ urlpatterns = [
     url(r'^users/$',views.UserRegisterView.as_view()),
     # url(r'^authorizations/$',views.UserLoginView.as_view()),
     url(r'^authorizations/$', obtain_jwt_token),
+    url(r'^user/$', views.UserDetailView.as_view()),
+    url(r'^email/$', views.EmailView.as_view()),
+
 ]

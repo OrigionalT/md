@@ -50,7 +50,7 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         if redis_sms_code.decode() != sms_code:
             raise serializers.ValidationError({"message": "验证码错误"})
         if not allow:
-            raise serializers.ValidationError({'message':'未勾选同意'})
+            raise serializers.ValidationError({'message': '未勾选同意'})
 
         return attrs
 
@@ -80,6 +80,13 @@ class UserRegisterSerializer(serializers.ModelSerializer):
 
         return user
 
+
+class UserDetailSerializer(serializers.ModelSerializer):
+    """用户中心"""
+
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'mobile', 'email', 'email_active')
 
 # class UserLoginSerializer(serializers.ModelSerializer):
 #     token = serializers.CharField(label="jwt", read_only=True)
@@ -130,3 +137,8 @@ class UserRegisterSerializer(serializers.ModelSerializer):
 #         user.token = token
 #
 #         return user
+
+class EmailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id','email')
