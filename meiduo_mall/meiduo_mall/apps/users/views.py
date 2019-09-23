@@ -1,3 +1,4 @@
+from rest_framework import status
 from rest_framework.generics import CreateAPIView, RetrieveAPIView, RetrieveUpdateAPIView, UpdateAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -60,3 +61,22 @@ class EmailView(UpdateAPIView):
     def get_object(self):
         return self.request.user
 
+  #  url(r'^emails/verification/$', views.VerifyEmailView.as_view()),
+
+
+class VerifyEmailView(APIView):
+    def put(self, request):
+        # 获取token
+        token = request.query_params.get('token')
+        if not token:
+            return Response({'message': '缺少token'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # 验证token
+        user = User.check_verify_email(token)
+        if user is None:
+            return Response({'message': '链接信息无效'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # 设置用户的邮箱验证标记
+        user.email_active = True
+        user.save()
+        return Response({'message': 'OK'})

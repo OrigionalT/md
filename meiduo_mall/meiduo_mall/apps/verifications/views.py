@@ -39,6 +39,6 @@ class SMSCodeView(APIView):
         # except Exception as e:
         #     return Response({'message': '发送短信异常'}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
 
-        # ccp_send_sms_code.delay(mobile, sms_code)
+        ccp_send_sms_code.delay(mobile, sms_code)
 
         return Response({'message': 'OK'})
